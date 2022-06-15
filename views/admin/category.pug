@@ -1,0 +1,50 @@
+include ../functions.pug
+
+- var c = category || {}
++form('post', 'catForm', 'newCategory', 
+		c, [{ name: 'name', 
+				pattern: regexes.catName.source, 
+				title: 'Die Kategorie soll mit einem Grossbuchstaben oder einer Zahl beginnen',
+				label: 'Name', 
+				placeholder: 'Name der Kategorie', 
+				required: true,
+				error: 'Name vergeben/invalid' }, 
+			 { input: 'textarea', 
+			 	name: 'desc', 
+			 	pattern: regexes.catDesc.source,
+			    title: 'Die Beschreibung soll mit einem Grossbuchstaben oder einer Zahl beginnen',
+			    cols: 50, 
+			    rows: 4, 
+			    label: 'Beschreibung', 
+			    placeholder: 'Beschreibung', 
+			    required: true,
+			    br: true,
+			    error: 'Beschreibung invalid' }])
+
+br
+
+if categories.length === 0
+  h3 Es gibt keine Kategorien!
+else
+  .adminTableContainer
+    table(id='categories').table.table-bordered.adminTable
+      thead
+        tr
+          th Name
+          th Beschreibung
+          th: span.glyphicon.glyphicon-cog
+      tbody
+        each cat in categories
+          tr
+            td= cat.name
+            td= cat.desc
+            td
+              form(method='post' action='')
+                input(type='hidden' name='_id' value=cat._id)
+                button(type='submit' name='editType' value='removeCategory' title='Löschen').asLink
+                  .sr-only Kategorie löschen
+                  span.glyphicon.glyphicon-remove(aria-hidden='true')
+                button(type='submit' name='editType' value='editCategory' title='Bearbeiten').asLink
+                  .sr-only Kategorie bearbeiten
+                  span.glyphicon.glyphicon-pencil(aria-hidden='true')
+

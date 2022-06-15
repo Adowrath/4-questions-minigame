@@ -1,0 +1,30 @@
+if highscores.length === 0
+  h3 Es gibt keine Highscores!
+else
+  .adminTableContainer
+    table(id="highscores").table.table-bordered.adminTable
+      thead
+        tr
+          th Rang
+          th Gewichtet
+          th Name
+          th Zeitpunkt
+          th Punkte
+          th Dauer
+          th Kategorien
+          th: span.glyphicon.glyphicon-cog
+      tbody
+        each h, index in highscores
+          tr
+            td= index + 1
+            td= (h.points/h.duration).toPrecision(2)
+            td= h.name
+            td= h.start.toLocaleString()
+            td= h.points
+            td= h.duration
+            td= h._categories.length !== 0 ? h._categories.map(c => c.name).join(", ") : 'Kategorien nicht mehr vorhanden'
+            td
+              form(method="post" action="")
+                input(type="hidden" name="_id" value=h._id)
+                button(type="submit" name="editType" value="removeHighscore" title="Löschen").asLink
+                  span.glyphicon.glyphicon-remove(aria-hidden="true")

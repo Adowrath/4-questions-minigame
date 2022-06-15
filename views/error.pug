@@ -1,0 +1,15 @@
+extends template.pug
+
+block title
+  title= (typeof errCode === 'undefined' ? '' : errCode+' - ' ) + 'An error has occured'
+
+block content
+  h1 There has been an error!
+  p #{message}
+  pre #{error}
+
+block footer
+  .footLinks
+    a(href='/').left Startseite
+    a(href='/highscores').middle Highscores
+    a(href='/admin/home').right Adminbereich

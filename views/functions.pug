@@ -1,0 +1,30 @@
+- var defaultWidths = [{_:'md', _1:2, _2:5}, {_:'sm', _1:3, _2:6}, {_:'xs', _1:2, _2:10}]
+mixin form(method, id, saveAction, mainObject, inputs, formWidths=defaultWidths)
+  form(method=method id=id action='').form-horizontal
+    input(type='hidden' id='_id' name='_id' value=mainObject._id || -1)
+    each i in inputs
+      .form-group
+        label(for=i.name class=formWidths.map(_=>`col-${_._}-${_._1}`)).control-label #{i.label}:
+        div(class=formWidths.map(_=>`col-${_._}-${_._2}`))
+          if i.input === 'select'
+            select(class=error[i.name] ? 'errorInput' : '' title=i.title 
+                   id=i.name name=i.name required=i.required).form-control
+              option(value='')= i.defaultValue || ''
+              each _ in i.options._
+                option(value=_[i.options.value] 
+                	   selected=mainObject[i.name] 
+                	            && mainObject[i.name].toString() === _[i.options.value].toString())
+                  | #{_[i.options.text]}
+          else
+            #{i.input || 'input'}(class=error[i.name] ? 'errorInput' : ''
+                                  cols=i.cols rows=i.rows pattern=i.pattern title=i.title
+                                  type=i.type || 'text' id=i.name name=i.name placeholder=i.placeholder
+                                  value=mainObject[i.name] required=i.required).form-control
+          if error[i.name]
+            span= i.error
+    .form-group
+      div(class=[...formWidths.map(_=>`col-${_._}-offset-${_._1}`), 
+      			 ...formWidths.map(_=>`col-${_._}-${_._2}`)])
+        button(type='submit' name='editType' value=saveAction).btn.btn-default
+          span= mainObject._id === undefined ? 'Speichern ' : 'Bearbeiten '
+          span.glyphicon.glyphicon-ok

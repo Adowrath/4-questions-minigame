@@ -1,0 +1,17 @@
+extends template.pug
+
+block content
+  p.
+    Ihre Punktzahl beträgt #{score} Punkte und Sie haben #{duration} Sekunden gebraucht. 
+    Dadurch haben Sie eine Gesamtpunktzahl von #{(score/duration).toPrecision(2)} erreicht.
+
+  form(method='post' action='').form-inline
+    .form-group
+      label(for='name') Ihr Name:
+      input(type='text' id='name'  name='name' placeholder='Spielername' required).form-control
+    button(type='submit').btn.btn-default Als Highscore eintragen
+
+block footer
+  .footLinks
+    a(href='/').left Startseite
+    a(href='/admin/home').right Adminbereich

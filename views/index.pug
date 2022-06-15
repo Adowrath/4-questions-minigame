@@ -1,0 +1,31 @@
+extends template.pug
+
+block scripts
+
+block content
+  if noneFound
+    p Tut mir Leid, aber mit den von ihnen eben gewählten Kategorien sind keine Fragen assoziiert!
+  
+  if !cats || cats.length === 0
+    p.
+     Tut mir Leid, aber es scheint, als seien keine Kategorien vorhanden. 
+     Derzeit ist ein Spielen folglich nicht möglich, wir bitten um Entschuldigung. 
+  else
+    p.
+      Wählen Sie die Kategorien aus, aus denen sie Fragen erhalten wollen.
+    
+    form(method='post' action='/')
+      .categories
+        each category, index in cats
+          
+          .category
+            input(type='checkbox' name='categories' id=category._id value=category._id).catCheckbox
+            label(tabindex=index + 1 for=category._id) #{category.name}
+            .description.
+              #{category.desc}
+        button(type='submit') Spiel starten
+      
+block footer
+  .footLinks
+    a(href='/highscores').middle Highscores
+    a(href='/admin/home').right Adminbereich

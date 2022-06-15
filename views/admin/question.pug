@@ -1,0 +1,91 @@
+include ../functions.pug
+if categories.length === 0
+  h3 Keine Kategorien vorhanden; bitte erst eine Kategorie hinzufügen.
+else
+  - var q = question || {}
+  +form('post', 'quesForm', 'newQuestion', 
+		q, [{ name: 'text', 
+				pattern: regexes.queText.source, 
+				title: 'Der Typ beginnt mit einem Grossbuchstaben oder einer Zahl',
+				label: 'Text', 
+				placeholder: 'Fragentext', 
+				required: true,
+				error: 'bereits vorhanden/ungültiges Format' }, 
+			 { name: '_category', 
+			    input: 'select',
+			    title: 'Wählen Sie eine Kategorie aus', 
+			    label: 'Kategorie',
+			    required: true,
+			    error: 'Kategorie nicht mehr vorhanden, aktualisieren Sie bitte die Seite',
+			    options: {
+			      _: categories,
+			      value: '_id',
+			      text: 'name'
+			    } }, 
+			 { name: 'answer', 
+			 	pattern: regexes.queAnswer.source,
+			    title: '', 
+			    label: 'Antwort',
+			    placeholder: 'Korrekte Antwort', 
+			    required: true,
+			    error: 'ungültiges Format' }, 
+			 { name: 'wrong1', 
+			 	pattern: regexes.queAnswer.source,
+			    title: '', 
+			    label: 'Falsche Antwort 1',
+			    placeholder: 'Erste Falsche Antwort', 
+			    required: true,
+			    error: 'ungültiges Format' }, 
+			 { name: 'wrong2', 
+			 	pattern: regexes.queAnswer.source,
+			    title: '', 
+			    label: 'Falsche Antwort 2', 
+			    placeholder: 'Zweite Falsche Antwort', 
+			    required: true,
+			    error: 'ungültiges Format' }, 
+			 { name: 'wrong3', 
+			 	pattern: regexes.queAnswer.source,
+			    title: '', 
+			    label: 'Falsche Antwort 3', 
+			    placeholder: 'Dritte Falsche Antwort', 
+			    required: true,
+			    error: 'ungültiges Format' }])
+
+br
+
+if questions.length === 0
+  h3 Es gibt keine Fragen!
+else
+  .adminTableContainer
+    table(id="questions").table.table-bordered.adminTable
+      thead
+        tr
+          th Text
+          th Kategorie
+          th Antwort
+          th Falsche Antwort 1
+          th Falsche Antwort 2
+          th Falsche Antwort 3
+          th Richtig
+          th Falsch
+          th: span.glyphicon.glyphicon-cog
+      tbody
+        each que in questions
+          tr
+            td= que.text
+            td= que._category.name
+            td= que.answer
+            td= que.wrong1
+            td= que.wrong2
+            td= que.wrong3
+            td= que.answeredRight
+            td= que.answeredWrong
+            td
+              form(method="post" action="")
+                input(type="hidden" name="_id" value=que._id)
+                button(type="submit" name="editType" value="removeQuestion" title="Löschen").asLink
+                  .sr-only Frage löschen
+                  span.glyphicon.glyphicon-remove(aria-hidden="true")
+                button(type="submit" name="editType" value="editQuestion" title="Bearbeiten").asLink
+                  .sr-only Frage bearbeiten
+                  span.glyphicon.glyphicon-pencil(aria-hidden="true")

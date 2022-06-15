@@ -1,0 +1,19 @@
+extends template.pug
+
+block content
+
+  p.
+    Tut mir Leid, Ihre letzte Antwort, "#[strong #{wrong}]", war nicht korrekt. 
+    
+    Die richtige Antwort war "#[strong #{correct}]". 
+    
+    Sie erreichten eine Punktzahl von #{score} Punkten.
+    
+  p.
+    Möchten Sie erneut beginnen? #[a(href='/') Ja].
+
+block footer
+  .footLinks
+    a(href='/').left Startseite
+    a(href='/highscores').middle Highscores
+    a(href='/admin/home').right Adminbereich

@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+  head
+    block title
+      title= title
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(charset='utf-8')
+    link(rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css')
+    link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+    block css
+    script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' async)
+    block scripts
+
+  body
+    header
+      block header
+    main
+      block content
+    footer
+      block footer

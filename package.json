@@ -1,0 +1,47 @@
+{
+  "name": "lb-151",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "mongodb": "mongod --auth --dbpath data",
+    "mongodb-noauth": "mongod --dbpath data",
+    "start": "node ./bin/www",
+    "test": "set NODE_TESTING=testing&set NODE_ENV=production&mocha --watch",
+    "test-html": "set NODE_TESTING=testing&set NODE_ENV=production&mocha --reporter mochawesome --reporter-options reportName=index,reportDir=mochawesome & start mochawesome/index.html",
+    "coverage": "set NODE_TESTING=testing&set NODE_ENV=production&istanbul cover node_modules/mocha/bin/_mocha & start coverage/lcov-report/index.html",
+    "test-full": "set NODE_TESTING=testing&set NODE_ENV=production&istanbul cover node_modules/mocha/bin/_mocha -- --reporter mochawesome --reporter-options reportName=index,reportDir=mochawesome&start mochawesome/index.html&start coverage/lcov-report/index.html",
+    "setup": "npm install --only=dev&npm install -g mocha istanbul"
+  },
+  "main": "./bin/www",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "graceful-fs": "^4.1.10",
+    "mongoose": "^4.6.4",
+    "mongoose-idexists": "^1.0.5",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "graceful-fs": "^4.1.9",
+    "mocha": "^3.1.2",
+    "mochawesome": "^1.5.3",
+    "sinon": "^1.17.6"
+  },
+  "description": "NodeJS-Variante für den MKN des Moduls 151.",
+  "keywords": [
+    "lb",
+    "mkn",
+    "151"
+  ],
+  "author": "Adowrath",
+  "license": "ISC"
+}

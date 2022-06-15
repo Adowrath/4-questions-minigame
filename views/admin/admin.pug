@@ -1,0 +1,22 @@
+extends ../template.pug
+
+block scripts
+  script(src='/javascripts/admin.js' async)
+
+block header
+  nav
+    ul.nav.nav-tabs
+      li(class=method === 'home' ? 'active' : '')
+        a(href=method === 'home' ? '#' : 'home').nav-link#nav-home Home
+      li(class=method === 'category' ? 'active' : '')
+        a(href=method === 'category' ? '#' : 'category').nav-link#nav-category Kategorien
+      li(class=method === 'question' ? 'active' : '')
+        a(href=method === 'question' ? '#' : 'question').nav-link#nav-question Fragen
+      li(class=method === 'highscore' ? 'active' : '')
+        a(href=method === 'highscore' ? '#' : 'highscore').nav-link#nav-highscore Highscores
+            
+  
+block footer
+  .footLinks
+    a(href='/').left Startseite
+    a(href='/logout').right Logout

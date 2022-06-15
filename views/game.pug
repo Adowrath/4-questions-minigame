@@ -1,0 +1,48 @@
+extends template.pug
+
+block scripts
+  script(src='/javascripts/progressbar.min.js' async)
+  script(src='/javascripts/game.js' async)
+
+block content
+  
+  if correct === false
+    p.
+      Die letzte Antwort war falsch. Korrekt war: 
+      = correctAnswer
+  else
+    if correct
+      p Korrekt!
+    
+    form(method='post' action='')
+      input(type='hidden' name='id' value=question._id)
+      h3 #{question.text}
+      
+      p Kategorie: 
+        abbr(title=question._category.desc) #{question._category.name}
+      
+      - var disablings = [1,2,3]
+      - disablings.splice(~~(Math.random() * 3), 1)
+      each o, index in order
+        p.answers
+          button(type='submit' name='chosen' value=index 
+                 disabled=joker && disablings.indexOf(o) !== -1).asLink= answers[o]
+    
+    p
+      span#points Punktestand: #{score} 
+      div
+        form(method='post' action='')
+          button(type='submit' name='joker' value=1 disabled=jokerUsed).asLink= jokerUsed ? '50:50 Joker (Bereits benutzt)' : '50:50 Joker'
+      if score !== 0
+        div
+          a(href='/end') Spiel beenden
+      #time(data-start=start)
+        span Gebrauchte Zeit: #{time}
+      #correctness(data-correct=question.answeredRight+question.answeredWrong === 0 ? 0 : question.answeredRight/(question.answeredRight+question.answeredWrong))
+        span Korrekt geantwortet: #{~~(question.answeredRight+question.answeredWrong === 0 ? 0 : question.answeredRight/(question.answeredRight+question.answeredWrong) * 100)}%
+    
+    
+block footer
+  .footLinks
+    a(href='/reset').left Abbrechen
+    a(href='/admin/home').right Adminbereich
